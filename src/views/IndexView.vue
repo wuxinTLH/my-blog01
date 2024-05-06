@@ -11,21 +11,21 @@
             </ul>
         </view>
         <view id="content">
-            <ul>
+            <ul v-if="contentList.length > 0">
                 <li class="content-item" v-for="( item) in contentList" :key="item.id"
-                    @click="linkJumpPage(item.pageLink)">
+                    @click="linkJumpPage(item.page_id)">
                     <div class="page-view">
                         <div class="page-title">
-                            <div class="title-content">{{ item.contentTitle }}</div>
+                            <div class="title-content">{{ item.content_title }}</div>
                         </div>
                         <div class="page-content">
                             <div class="page-content-content">
-                                {{ item.contentContent }}
+                                {{ item.content_content }}
                             </div>
                         </div>
                     </div>
                     <div class="page-cover">
-                        <img :src="item.contentCover" alt="">
+                        <img :src="item.content_cover" alt="">
                     </div>
                 </li>
             </ul>
@@ -57,16 +57,15 @@ export default {
         });
 
         //右边内容
-        const contentList = ref([
-            {
-                id: 0,
-                pageLink: "",
-                contentTitle: "标题1",
-                contentContent: "内容1",
-                contentCover: "封面地址1"
-            }
-        ]);
-
+        const contentList = ref([]);
+        httpGet("/api/content/randomList?length=10", {})
+            .then((res) => {
+                // log('info', "content内容:" + res);
+                //console.log(res.data);
+                contentList.value = res.data;
+            }).catch((e) => {
+                log('error', e);
+            })
 
         return {
             navList,
@@ -103,8 +102,7 @@ export default {
         //     })
         // },
         linkJumpPage: function (pageID) {
-            console.log(pageID);
-            window.location.href = `/artical/{${pageID}}`
+            window.location.href = `/artical/${pageID}`
         },
     },
 

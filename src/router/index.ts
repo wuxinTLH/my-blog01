@@ -28,6 +28,14 @@ const router = createRouter({
       }
     },
     {
+      path: "/artical/:id",
+      name: "artical",
+      component: () => import('@/views/ArticalView.vue'),
+      meta: {
+        title: "文章"
+      }
+    },
+    {
       path: '/user',
       name: 'user',
       component: () => import('@/views/UserView.vue'),
