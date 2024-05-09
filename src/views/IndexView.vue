@@ -36,9 +36,9 @@
 
 <script type="ts">
 import NavigationBar from '@/components/Navigation/NavigationBar.vue';
+import FootCom from '@/components/Footer/Footer.vue';
 // import axios from 'axios';
 import CryptoJS from 'crypto-js';
-import FootCom from '@/components/Footer/Footer.vue';
 import { httpGet, httpPost } from "@/utils/httpRequests";
 import { ref } from 'vue';
 import { log } from '@/utils/logg'

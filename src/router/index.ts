@@ -40,26 +40,16 @@ const router = createRouter({
       name: 'user',
       component: () => import('@/views/UserView.vue'),
       meta: {
-        title: '用户中心' // 主路由的默认标题  
+        title: '用户中心'
       },
-      children: [
-        {
-          path: 'login', // 注意这里移除了斜杠，因为它将是 /user/login  
-          name: 'user-login',
-          redirect: '/user/login',
-          meta: {
-            title: '用户登录' // 子路由的标题  
-          }
-        },
-        {
-          path: 'register', // 同样移除了斜杠  
-          name: 'user-register',
-          redirect: '/user/register',
-          meta: {
-            title: '用户注册' // 子路由的标题  
-          }
-        }
-      ]
+    },
+    {
+      path: '/user/login',
+      name: 'userlogin',
+      component: () => import('@/views/LoginView.vue'),
+      meta: {
+        title: '用户登录'
+      },
     }
   ]
 });

@@ -16,12 +16,12 @@ async function httpGet(uri: string, param: any = {}, defaultTimeout: number = 50
     }
 }
 
-async function httpPost(uri: string, param: any, defaultTimeout: number = 5000) {
+async function httpPost(uri: string, param: any, contentType: string = "application/json", defaultTimeout: number = 5000) {
     try {
         const response = await axios.post(baseUrl + uri, param, {
             timeout: defaultTimeout,
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': contentType
             }
         });
         return response.data;
