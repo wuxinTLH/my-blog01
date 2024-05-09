@@ -12,9 +12,10 @@
                     <label for="password">密码</label>
                     <input type="password" id="password" name="password" v-model="userLoginPassword" required />
                 </div>
-                <button type="submit" @click="userLogin()">登录</button>
+                <el-button type="primary" @click="userLogin()" :disabled="!loginLock">登录</el-button>
             </form>
         </div>
+
     </div>
     <!-- <FootCom /> -->
 </template>
@@ -28,6 +29,8 @@ import CryptoJS from 'crypto-js';
 
 const userLoginName = ref("");
 const userLoginPassword = ref("");
+const loginLock = ref(true);
+
 
 export default {
     name: 'LoginView',
@@ -39,6 +42,7 @@ export default {
         return {
             userLoginName,
             userLoginPassword,
+            loginLock,
         }
     },
     methods: {
@@ -47,6 +51,10 @@ export default {
                 alert("用户名或密码不能为空");
                 return;
             }
+            loginLock.value = false;
+            setTimeout(() => {
+                loginLock.value = true;
+            }, 5000)
             let data = {
                 "username": userLoginName.value,
                 "password": CryptoJS.SHA256(userLoginPassword.value).toString(),
@@ -54,19 +62,17 @@ export default {
             httpPost('/api/user/login', {
                 "username": data.username,
                 "password": data.password,
+            }).then((res) => {
+                if (res.code == 10001) {
+                    localStorage.setItem("cookie", res.data.cookie);
+                    alert("登录成功");
+                    window.location.href = "/user";
+                } else {
+                    alert("用户或密码错误")
+                }
+            }).catch((e) => {
+                alert("登录失败")
             })
-                .then((res) => {
-                    if (res.code == 10001) {
-                        localStorage.setItem("cookie", res.data.cookie);
-                        alert("登录成功");
-                        window.location.href = "/user";
-                    } else {
-                        alert("用户或密码错误")
-                    }
-                }).catch((e) => {
-                    alert("登录失败")
-                })
-
         }
     }
 }
