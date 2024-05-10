@@ -1,7 +1,7 @@
 import axios from "axios";
 import { log } from './logg';
 
-const baseUrl = 'http://localhost:8080';
+const baseUrl = window.location.hostname === 'localhost' ? 'http://localhost:8080' : 'http://sakurapc.ddns.net:8080';
 
 async function httpGet(uri: string, param: any = {}, defaultTimeout: number = 5000) {
     try {

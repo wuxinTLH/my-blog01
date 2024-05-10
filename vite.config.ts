@@ -17,6 +17,7 @@ export default defineConfig({
     }
   },
   server: {
+    host: ["127.0.0.1", "localhost"],
     port: 2333,
     open: true,
     proxy: {
@@ -25,7 +26,7 @@ export default defineConfig({
         target: 'http://127.0.0.1:8080', // 目标服务器地址
         changeOrigin: true, // 允许跨域
         rewrite: (path) => path.replace(/^\/api/, '') // 重写路径，去掉 /api 前缀
-      }
+      },
     }
   }
 

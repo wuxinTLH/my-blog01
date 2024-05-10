@@ -11,6 +11,8 @@
             </ul>
         </view>
         <view id="content">
+            <el-button type="primary" style="display:block;margin:0 auto;margin-top: 24px;"
+                @click="getContentListHandle()">手动重新获取列表</el-button>
             <ul v-if="contentList.length > 0">
                 <li class="content-item" v-for="( item) in contentList" :key="item.id"
                     @click="linkJumpPage(item.page_id)">
@@ -43,7 +45,7 @@ import { httpGet, httpPost } from "@/utils/httpRequests";
 import { ref } from 'vue';
 import { log } from '@/utils/logg'
 
-
+const contentList = ref([]);
 export default {
     name: "IndexView",
     setup() {
@@ -57,7 +59,7 @@ export default {
         });
 
         //右边内容
-        const contentList = ref([]);
+
         httpGet("/api/content/randomList?length=10", {})
             .then((res) => {
                 // log('info', "content内容:" + res);
@@ -104,6 +106,17 @@ export default {
         linkJumpPage: function (pageID) {
             window.location.href = `/artical/${pageID}`
         },
+        getContentListHandle: function () {
+            httpGet("/api/content/randomList?length=10", {})
+                .then((res) => {
+                    // log('info', "content内容:" + res);
+                    //console.log(res.data);
+                    contentList.value = res.data;
+                }).catch((e) => {
+                    log('error', e);
+                })
+
+        }
     },
 
 

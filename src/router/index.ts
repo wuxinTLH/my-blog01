@@ -50,6 +50,14 @@ const router = createRouter({
       meta: {
         title: '用户登录'
       },
+    },
+    {
+      path: '/user/logout',
+      name: "logout",
+      component: () => import('@/views/LogoutView.vue'),
+      meta: {
+        title: '用户登出'
+      }
     }
   ]
 });
